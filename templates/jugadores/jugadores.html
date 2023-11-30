@@ -1,0 +1,19 @@
+<!-- AppFutbol/templates/jugadores.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jugadores</title>
+</head>
+<body>
+    <h1>Listado de Jugadores</h1>
+    <p>
+        {% for jugador in jugadores %}
+            <li>{{ jugador.nombre }}</li>
+        {% endfor %}
+    </p>
+    <a href="{% url 'agregar_jugador' %}">Agregar Jugador</a>
+    <a href="{% url 'seleccionar_categoria' %}">Volver</a>
+</body>
+</html>
