@@ -27,9 +27,10 @@ def busqueda_equipo(request):
     }
     return render(request, "equipos.html", contexto)
 
+#-----------------------------
 def mostrar_jugadores(request):
     jugadores = Jugador.objects.all()
-    contexto = {"jugadores": jugadores}
+    contexto = {"jugadores": jugadores, "form":BusquedaFormJugador()}
     return render(request, 'jugadores/jugadores.html', contexto)
 
 def agregar_jugador(request):
@@ -43,10 +44,19 @@ def agregar_jugador(request):
 
     return render(request, 'jugadores/agregar_jugador.html', {'form': form})
 
+def busqueda_jugador(request):
+    nombre = request.GET.get("nombre", "")
+    jugadores = Jugador.objects.filter(nombre__icontains=nombre)
+    contexto = {
+        "jugadores": jugadores,
+        "form": BusquedaFormJugador(),
+    }
+    return render(request, "jugadores/jugadores.html", contexto)
 
+#-----------------------------
 def mostrar_entrenadores(request):
     entrenadores = Entrenador.objects.all()
-    contexto = {"entrenadores": entrenadores}
+    contexto = {"entrenadores": entrenadores, "form":BusquedaFormEntrenador()}
     return render(request, 'entrenador/entrenadores.html', contexto)
 
 def agregar_entrenador(request):
@@ -60,6 +70,16 @@ def agregar_entrenador(request):
 
     return render(request, 'entrenador/agregar_entrenador.html', {'form': form})
 
+def busqueda_entrenador(request):
+    nombre = request.GET.get("nombre", "")
+    entrenadores = Entrenador.objects.filter(nombre__icontains=nombre)
+    contexto = {
+        "entrenadores": entrenadores,
+        "form": BusquedaFormEntrenador(),
+    }
+    return render(request, "entrenador/entrenadores.html", contexto)
+
+#---------------------
 def seleccionar_categoria(request):
     return render(request, 'seleccionar_categoria.html')
 
