@@ -3,19 +3,39 @@ from AppFutbol.models import Equipo, Jugador, Entrenador
 
 
 class EquipoForm(forms.ModelForm):
+    puntaje = forms.IntegerField(
+        min_value=0,
+        max_value=10,
+        widget=forms.NumberInput(attrs={'type': 'number', 'min': 0, 'max': 10})
+    )
+
     class Meta:
         model = Equipo
-        fields = ['nombre']
+        fields = ['nombre', 'puntaje']
 
 class JugadorForm(forms.ModelForm):
+    puntaje = forms.IntegerField(
+        min_value=0,
+        max_value=10,
+        widget=forms.NumberInput(attrs={'type': 'number', 'min': 0, 'max': 10})
+    )
+
     class Meta:
         model = Jugador
-        fields = ['nombre']
+        fields = ['nombre', 'puntaje']
 
 class EntrenadorForm(forms.ModelForm):
+
+    puntaje = forms.IntegerField(
+        min_value=0,
+        max_value=10,
+        widget=forms.NumberInput(attrs={'type': 'number', 'min': 0, 'max': 10})
+    )
+
     class Meta:
         model = Entrenador
-        fields = ['nombre']
+        fields = ['nombre', 'puntaje']
+
 
 class BusquedaFormJugador(forms.Form):
     nombre = forms.CharField()

@@ -11,6 +11,7 @@
     <form method="post" action="{% url 'agregar_entrenador' %}">
         {% csrf_token %}
         {{ form.as_p }}
+        <span style="color: red;">{{ form.puntaje.errors }}</span> <!-- Muestra el mensaje de error del puntaje -->
         <button type="submit">Guardar</button>
     </form>
     <a href="{% url 'mostrar_entrenadores' %}">Volver a la lista de Entrenadores</a>
