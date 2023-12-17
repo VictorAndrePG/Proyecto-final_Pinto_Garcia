@@ -9,7 +9,8 @@
 <body>
 {% extends 'base/base.html' %}
 {% block cambio %}
-
+    <h1>Var-ristas</h1>
+    <p>Opiniones de Fans que algo saben de futbol</p>
 <hr>
     <h1>Listado de Equipos</h1>
         <!-- este es el buscador -->
@@ -23,7 +24,7 @@
     </form>
     </div>
     <a href="{% url 'agregar_equipo' %}">Agregar Equipo</a> <br>
-    <a href="{% url 'seleccionar_categoria' %}">Volver</a>
+
             <hr>
 
             <!-- Aqui se hace el listado -->

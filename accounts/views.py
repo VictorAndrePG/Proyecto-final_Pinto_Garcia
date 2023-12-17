@@ -32,7 +32,7 @@ def login_request(request):
 
 def register_request(request):
     if request.method == "POST":
-        # form = UserCreationForm(request.POST)
+
         form = UserRegisterForm(request.POST)
 
         if form.is_valid():
