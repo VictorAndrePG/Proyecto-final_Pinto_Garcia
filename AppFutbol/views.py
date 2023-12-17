@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DeleteView, DetailView, UpdateView
@@ -9,13 +10,16 @@ class EquipoDetalle(LoginRequiredMixin, DetailView):
     model = Equipo
     template_name = "AppFutbol/equipo_detalle.html"
 
+@login_required
 def editar_equipo(request, equipo_id):
     equipo = get_object_or_404(Equipo, pk=equipo_id)
 
     if request.method == 'POST':
-        form = EquipoForm(request.POST, instance=equipo)
+        form = EquipoForm(request.POST, request.FILES, instance=equipo)
         if form.is_valid():
-            form.save()
+            equipo = form.save(commit=False)
+            equipo.usuario_creacion = request.user
+            equipo.save()
             return redirect('mostrar_equipos')
     else:
         form = EquipoForm(instance=equipo)
@@ -33,6 +37,7 @@ class JugadorDetalle(LoginRequiredMixin, DetailView):
     model = Jugador
     template_name = "jugadores/jugador_detalle.html"
 
+@login_required
 def editar_jugador(request, jugador_id):
     jugador = get_object_or_404(Jugador, pk=jugador_id)
 
@@ -57,6 +62,7 @@ class EntrenadorDetalle(LoginRequiredMixin, DetailView):
     model = Entrenador
     template_name = "entrenador/entrenador_detalle.html"
 
+@login_required
 def editar_entrenador(request, entrenador_id):
     entrenador = get_object_or_404(Entrenador, pk=entrenador_id)
 
@@ -81,14 +87,13 @@ def mostrar_equipos(request):
     contexto = {"equipos": equipos, "form":BusquedaFormEquipo()}
     return render(request, 'equipos/equipos.html', contexto)
 
+@login_required
 def agregar_equipo(request):
     if request.method == 'POST':
-        form = EquipoForm(request.POST)
-        puntaje = request.POST.get('puntaje')
-
+        form = EquipoForm(request.POST, request.FILES)
         if form.is_valid():
             equipo = form.save(commit=False)
-            equipo.puntaje = puntaje
+            equipo.usuario_creacion = request.user
             equipo.save()
             return redirect('mostrar_equipos')
     else:
@@ -122,6 +127,7 @@ def mostrar_jugadores(request):
     contexto = {"jugadores": jugadores, "form":BusquedaFormJugador()}
     return render(request, 'jugadores/jugadores.html', contexto)
 
+@login_required
 def agregar_jugador(request):
     if request.method == 'POST':
         form = JugadorForm(request.POST)
@@ -162,6 +168,7 @@ def mostrar_entrenadores(request):
     contexto = {"entrenadores": entrenadores, "form":BusquedaFormEntrenador()}
     return render(request, 'entrenador/entrenadores.html', contexto)
 
+@login_required
 def agregar_entrenador(request):
     if request.method == 'POST':
         form = EntrenadorForm(request.POST)
@@ -203,5 +210,5 @@ def seleccionar_categoria(request):
 
 #-------------------------
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'index.html')
 

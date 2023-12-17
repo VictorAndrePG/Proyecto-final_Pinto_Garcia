@@ -1,8 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Equipo(models.Model):
     nombre = models.CharField(max_length=40)
     puntaje = models.IntegerField(default=0)
+    usuario_creacion = models.ForeignKey(blank=True, null=True, on_delete=models.CASCADE, to='auth.User', default=None)
+    fecha_ultimo_cambio = models.DateTimeField(auto_now=True)
+    imagen = models.ImageField(upload_to='equipos/', blank=True, null=True)
     def __str__(self):
         return f"Equipo: {self.nombre} - Puntaje {self.puntaje} "
 

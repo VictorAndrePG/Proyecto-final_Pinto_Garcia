@@ -1,7 +1,7 @@
 from django import forms
 from AppFutbol.models import Equipo, Jugador, Entrenador
 
-
+#-----------------------------------------
 class EquipoForm(forms.ModelForm):
     puntaje = forms.IntegerField(
         min_value=0,
@@ -11,8 +11,12 @@ class EquipoForm(forms.ModelForm):
 
     class Meta:
         model = Equipo
-        fields = ['nombre', 'puntaje']
+        fields = ['nombre', 'puntaje', 'imagen']
 
+    def __init__(self, *args, **kwargs):
+        super(EquipoForm, self).__init__(*args, **kwargs)
+
+#---------------------------------------------------------
 class JugadorForm(forms.ModelForm):
     puntaje = forms.IntegerField(
         min_value=0,
@@ -24,6 +28,7 @@ class JugadorForm(forms.ModelForm):
         model = Jugador
         fields = ['nombre', 'puntaje']
 
+#----------------------------------------------------------
 class EntrenadorForm(forms.ModelForm):
 
     puntaje = forms.IntegerField(

@@ -5,8 +5,12 @@
     <title>Detalles del equipo</title>
 </head>
 <body>
+
     <p>El nombre del equipo es: <b>{{equipo.nombre}}</b></p>
     <p>Puntaje: {{equipo.puntaje}}</p>
+    {% if usuario_creacion %}
+        <p>Autor: {{ usuario_creacion.username }}</p>
+    {% endif %}
     <p>
         <a href="{% url 'mostrar_equipos' %}">Lista de Equipos</a>
     </p>
